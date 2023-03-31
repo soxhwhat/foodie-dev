@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imooc.mapper.CarouselMapper;
 import com.imooc.mapper.CategoryMapper;
 import com.imooc.mapper.CategoryMapperCustom;
@@ -36,8 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("type", 1);
 
-        List<Category> result =  categoryMapper.selectByExample(example);
-
+//        List<Category> result =  categoryMapper.selectByExample(example);
+        List<Category> result = categoryMapper.selectList(new QueryWrapper<Category>().eq("type", 1));
         return result;
     }
 

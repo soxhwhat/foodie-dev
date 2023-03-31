@@ -1,5 +1,6 @@
 package com.imooc.service.impl.center;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.imooc.enums.YesOrNo;
 import com.imooc.mapper.*;
@@ -48,7 +49,8 @@ public class MyCommentsServiceImpl extends BaseService implements MyCommentsServ
     public List<OrderItems> queryPendingComment(String orderId) {
         OrderItems query = new OrderItems();
         query.setOrderId(orderId);
-        return orderItemsMapper.select(query);
+//        return orderItemsMapper.select(query);
+        return orderItemsMapper.selectList(new QueryWrapper<OrderItems>(query));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -69,13 +71,14 @@ public class MyCommentsServiceImpl extends BaseService implements MyCommentsServ
         Orders order = new Orders();
         order.setId(orderId);
         order.setIsComment(YesOrNo.YES.type);
-        ordersMapper.updateByPrimaryKeySelective(order);
+        ordersMapper.updateById(order);
 
         // 3. 修改订单状态表的留言时间 order_status
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setOrderId(orderId);
         orderStatus.setCommentTime(new Date());
-        orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
+//        orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
+        orderStatusMapper.update(orderStatus, new QueryWrapper<OrderStatus>().eq("order_id", orderId));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

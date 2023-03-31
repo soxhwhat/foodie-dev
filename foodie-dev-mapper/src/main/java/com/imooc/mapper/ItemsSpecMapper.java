@@ -1,7 +1,7 @@
 package com.imooc.mapper;
 
-import com.imooc.my.mapper.MyMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.imooc.pojo.ItemsSpec;
 
-public interface ItemsSpecMapper extends MyMapper<ItemsSpec> {
+public interface ItemsSpecMapper extends BaseMapper<ItemsSpec> {
 }

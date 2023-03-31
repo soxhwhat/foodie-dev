@@ -1,7 +1,7 @@
 package com.imooc.mapper;
 
-import com.imooc.my.mapper.MyMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.imooc.pojo.UserAddress;
 
-public interface UserAddressMapper extends MyMapper<UserAddress> {
+public interface UserAddressMapper extends BaseMapper<UserAddress> {
 }

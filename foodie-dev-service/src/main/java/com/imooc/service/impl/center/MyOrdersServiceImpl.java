@@ -1,5 +1,6 @@
 package com.imooc.service.impl.center;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imooc.enums.OrderStatusEnum;
@@ -85,7 +86,8 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
         criteria.andEqualTo("orderId", orderId);
         criteria.andEqualTo("orderStatus", OrderStatusEnum.WAIT_DELIVER.type);
 
-        orderStatusMapper.updateByExampleSelective(updateOrder, example);
+//        orderStatusMapper.updateByExampleSelective(updateOrder, example);
+        orderStatusMapper.update(updateOrder, new QueryWrapper<OrderStatus>().eq("order_id", orderId).eq("order_status", OrderStatusEnum.WAIT_DELIVER.type));
     }
 
     @Transactional(propagation=Propagation.SUPPORTS)
@@ -97,7 +99,7 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
         orders.setId(orderId);
         orders.setIsDelete(YesOrNo.NO.type);
 
-        return ordersMapper.selectOne(orders);
+        return ordersMapper.selectOne(new QueryWrapper<Orders>().eq("user_id", userId).eq("id", orderId).eq("is_delete", YesOrNo.NO.type));
     }
 
     @Transactional(propagation=Propagation.REQUIRED)
@@ -113,8 +115,8 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
         criteria.andEqualTo("orderId", orderId);
         criteria.andEqualTo("orderStatus", OrderStatusEnum.WAIT_RECEIVE.type);
 
-        int result = orderStatusMapper.updateByExampleSelective(updateOrder, example);
-
+//        int result = orderStatusMapper.updateByExampleSelective(updateOrder, example);
+        int result = orderStatusMapper.update(updateOrder, new QueryWrapper<OrderStatus>().eq("order_id", orderId).eq("order_status", OrderStatusEnum.WAIT_RECEIVE.type));
         return result == 1 ? true : false;
     }
 
@@ -131,8 +133,8 @@ public class MyOrdersServiceImpl extends BaseService implements MyOrdersService 
         criteria.andEqualTo("id", orderId);
         criteria.andEqualTo("userId", userId);
 
-        int result = ordersMapper.updateByExampleSelective(updateOrder, example);
-
+//        int result = ordersMapper.updateByExampleSelective(updateOrder, example);
+        int result = ordersMapper.update(updateOrder, new QueryWrapper<Orders>().eq("id", orderId).eq("user_id", userId));
         return result == 1 ? true : false;
     }
 

@@ -1,7 +1,7 @@
 package com.imooc.mapper;
 
-import com.imooc.my.mapper.MyMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.imooc.pojo.Stu;
 
-public interface StuMapper extends MyMapper<Stu> {
+public interface StuMapper extends BaseMapper<Stu> {
 }

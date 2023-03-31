@@ -1,7 +1,8 @@
 package com.imooc.mapper;
 
-import com.imooc.my.mapper.MyMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.imooc.pojo.Carousel;
 
-public interface CarouselMapper extends MyMapper<Carousel> {
+public interface CarouselMapper extends BaseMapper<Carousel> {
 }

@@ -1,8 +1,12 @@
 package com.imooc.pojo;
 
+import lombok.Data;
+import lombok.experimental.Accessors;
+
 import javax.persistence.*;
 import java.util.Date;
-
+@Data
+@Accessors(fluent = true, chain = true)
 public class Users {
     /**
      * 主键id 用户id

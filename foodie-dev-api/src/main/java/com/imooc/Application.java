@@ -11,7 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan(basePackages = "com.imooc.mapper")
 // 扫描所有包以及相关组件包
 @ComponentScan(basePackages = {"com.imooc", "org.n3r.idworker"})
-//@EnableTransactionManagement
+//@EnableTransactionManagement 开启事务管理，但是springboot默认已经开启了
 @EnableScheduling       // 开启定时任务
 public class Application {
 

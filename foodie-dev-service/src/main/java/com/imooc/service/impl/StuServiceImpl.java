@@ -17,7 +17,8 @@ public class StuServiceImpl implements StuService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Stu getStuInfo(int id) {
-        return stuMapper.selectByPrimaryKey(id);
+//        return stuMapper.selectByPrimaryKey(id);
+        return stuMapper.selectById(id);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -38,13 +39,15 @@ public class StuServiceImpl implements StuService {
         stu.setId(id);
         stu.setName("lucy");
         stu.setAge(20);
-        stuMapper.updateByPrimaryKey(stu);
+        stuMapper.updateById(stu);
+//        stuMapper.updateByPrimaryKey(stu);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void deleteStu(int id) {
-        stuMapper.deleteByPrimaryKey(id);
+        stuMapper.deleteById(id);
+//        stuMapper.deleteByPrimaryKey(id);
     }
 
 

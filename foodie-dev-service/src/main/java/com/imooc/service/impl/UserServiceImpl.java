@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imooc.enums.Sex;
 import com.imooc.mapper.StuMapper;
 import com.imooc.mapper.UsersMapper;
@@ -28,20 +29,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Sid sid;
 
-    private static final String USER_FACE = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";
+    private static final String USER_FACE = "http://127.0.0.1:9000/test/2023-03-31/demo.png";
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public boolean queryUsernameIsExist(String username) {
 
-        Example userExample = new Example(Users.class);
-        Example.Criteria userCriteria = userExample.createCriteria();
+//        Example userExample = new Example(Users.class);
+//        Example.Criteria userCriteria = userExample.createCriteria();
+//
+//        userCriteria.andEqualTo("username", username);
+//
+//        Users result = usersMapper.selectOneByExample(userExample);
 
-        userCriteria.andEqualTo("username", username);
-
-        Users result = usersMapper.selectOneByExample(userExample);
-
-        return result == null ? false : true;
+        Users result = usersMapper.selectOne(new QueryWrapper<Users>().eq("username", username));
+        return result != null;
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -91,13 +93,15 @@ public class UserServiceImpl implements UserService {
 //            e.printStackTrace();
 //        }
 
-        Example userExample = new Example(Users.class);
-        Example.Criteria userCriteria = userExample.createCriteria();
+//        Example userExample = new Example(Users.class);
+//        Example.Criteria userCriteria = userExample.createCriteria();
+//
+//        userCriteria.andEqualTo("username", username);
+//        userCriteria.andEqualTo("password", password);
 
-        userCriteria.andEqualTo("username", username);
-        userCriteria.andEqualTo("password", password);
+//        Users result = usersMapper.selectOneByExample(userExample);
 
-        Users result = usersMapper.selectOneByExample(userExample);
+        Users result = usersMapper.selectOne(new QueryWrapper<Users>().eq("username", username).eq("password", password));
 
         return result;
     }

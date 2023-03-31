@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imooc.enums.YesOrNo;
 import com.imooc.mapper.CarouselMapper;
 import com.imooc.mapper.UserAddressMapper;
@@ -31,11 +32,11 @@ public class AddressServiceImpl implements AddressService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public List<UserAddress> queryAll(String userId) {
+//
+//        UserAddress ua = new UserAddress();
+//        ua.setUserId(userId);
 
-        UserAddress ua = new UserAddress();
-        ua.setUserId(userId);
-
-        return userAddressMapper.select(ua);
+        return userAddressMapper.selectList(new QueryWrapper<UserAddress>().eq("user_id", userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -75,7 +76,9 @@ public class AddressServiceImpl implements AddressService {
         pendingAddress.setId(addressId);
         pendingAddress.setUpdatedTime(new Date());
 
-        userAddressMapper.updateByPrimaryKeySelective(pendingAddress);
+//        userAddressMapper.updateByPrimaryKeySelective(pendingAddress);
+
+        userAddressMapper.update(pendingAddress, new QueryWrapper<UserAddress>().eq("id", addressId));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -86,7 +89,9 @@ public class AddressServiceImpl implements AddressService {
         address.setId(addressId);
         address.setUserId(userId);
 
-        userAddressMapper.delete(address);
+//        userAddressMapper.delete(address);
+
+        userAddressMapper.delete(new QueryWrapper<UserAddress>().eq("id", addressId).eq("user_id", userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -97,10 +102,12 @@ public class AddressServiceImpl implements AddressService {
         UserAddress queryAddress = new UserAddress();
         queryAddress.setUserId(userId);
         queryAddress.setIsDefault(YesOrNo.YES.type);
-        List<UserAddress> list  = userAddressMapper.select(queryAddress);
+//        List<UserAddress> list = userAddressMapper.select(queryAddress);
+        List<UserAddress> list = userAddressMapper.selectList(new QueryWrapper<UserAddress>().eq("user_id", userId).eq("is_default", YesOrNo.YES.type));
         for (UserAddress ua : list) {
             ua.setIsDefault(YesOrNo.NO.type);
-            userAddressMapper.updateByPrimaryKeySelective(ua);
+//            userAddressMapper.updateByPrimaryKeySelective(ua);
+            userAddressMapper.update(ua, new QueryWrapper<UserAddress>().eq("id", ua.getId()));
         }
 
         // 2. 根据地址id修改为默认的地址
@@ -108,7 +115,8 @@ public class AddressServiceImpl implements AddressService {
         defaultAddress.setId(addressId);
         defaultAddress.setUserId(userId);
         defaultAddress.setIsDefault(YesOrNo.YES.type);
-        userAddressMapper.updateByPrimaryKeySelective(defaultAddress);
+//        userAddressMapper.updateByPrimaryKeySelective(defaultAddress);
+        userAddressMapper.update(defaultAddress, new QueryWrapper<UserAddress>().eq("id", addressId).eq("user_id", userId));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -119,6 +127,6 @@ public class AddressServiceImpl implements AddressService {
         singleAddress.setId(addressId);
         singleAddress.setUserId(userId);
 
-        return userAddressMapper.selectOne(singleAddress);
+        return userAddressMapper.selectOne(new QueryWrapper<UserAddress>().eq("id", addressId).eq("user_id", userId));
     }
 }

@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.imooc.enums.CommentLevel;
@@ -40,7 +41,8 @@ public class ItemServiceImpl implements ItemService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Items queryItemById(String itemId) {
-        return itemsMapper.selectByPrimaryKey(itemId);
+//        return itemsMapper.selectByPrimaryKey(itemId);
+        return itemsMapper.selectById(itemId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -50,7 +52,8 @@ public class ItemServiceImpl implements ItemService {
         Example.Criteria criteria = itemsImgExp.createCriteria();
         criteria.andEqualTo("itemId", itemId);
 
-        return itemsImgMapper.selectByExample(itemsImgExp);
+//        return itemsImgMapper.selectByExample(itemsImgExp);
+        return itemsImgMapper.selectList(new QueryWrapper<ItemsImg>().eq("item_id", itemId));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -59,9 +62,10 @@ public class ItemServiceImpl implements ItemService {
         Example itemsSpecExp = new Example(ItemsSpec.class);
         Example.Criteria criteria = itemsSpecExp.createCriteria();
         criteria.andEqualTo("itemId", itemId);
-
-        return itemsSpecMapper.selectByExample(itemsSpecExp);
+//        return itemsSpecMapper.selectByExample(itemsSpecExp);
+        return itemsSpecMapper.selectList(new QueryWrapper<ItemsSpec>().eq("item_id", itemId));
     }
+
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
@@ -70,7 +74,8 @@ public class ItemServiceImpl implements ItemService {
         Example.Criteria criteria = itemsParamExp.createCriteria();
         criteria.andEqualTo("itemId", itemId);
 
-        return itemsParamMapper.selectOneByExample(itemsParamExp);
+//        return itemsParamMapper.selectOneByExample(itemsParamExp);
+        return itemsParamMapper.selectOne(new QueryWrapper<ItemsParam>().eq("item_id", itemId));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -97,7 +102,9 @@ public class ItemServiceImpl implements ItemService {
         if (level != null) {
             condition.setCommentLevel(level);
         }
-        return itemsCommentsMapper.selectCount(condition);
+
+//        return itemsCommentsMapper.selectCount(condition);
+        return itemsCommentsMapper.selectCount(new QueryWrapper<ItemsComments>().eq("item_id", itemId));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -177,7 +184,8 @@ public class ItemServiceImpl implements ItemService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public ItemsSpec queryItemSpecById(String specId) {
-        return itemsSpecMapper.selectByPrimaryKey(specId);
+//        return itemsSpecMapper.selectByPrimaryKey(specId);
+        return itemsSpecMapper.selectById(specId);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -186,7 +194,8 @@ public class ItemServiceImpl implements ItemService {
         ItemsImg itemsImg = new ItemsImg();
         itemsImg.setItemId(itemId);
         itemsImg.setIsMain(YesOrNo.YES.type);
-        ItemsImg result = itemsImgMapper.selectOne(itemsImg);
+//        ItemsImg result = itemsImgMapper.selectOne(itemsImg);
+        ItemsImg result = itemsImgMapper.selectOne(new QueryWrapper<ItemsImg>().eq("item_id", itemId).eq("is_main", YesOrNo.YES.type));
         return result != null ? result.getUrl() : "";
     }
 

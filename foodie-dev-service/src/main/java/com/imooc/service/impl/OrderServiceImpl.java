@@ -1,5 +1,6 @@
 package com.imooc.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.imooc.enums.OrderStatusEnum;
 import com.imooc.enums.YesOrNo;
 import com.imooc.mapper.OrderItemsMapper;
@@ -156,13 +157,15 @@ public class OrderServiceImpl implements OrderService {
         paidStatus.setOrderStatus(orderStatus);
         paidStatus.setPayTime(new Date());
 
-        orderStatusMapper.updateByPrimaryKeySelective(paidStatus);
+//        orderStatusMapper.updateByPrimaryKeySelective(paidStatus);
+        orderStatusMapper.update(paidStatus, new QueryWrapper<OrderStatus>().eq("order_id", orderId));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public OrderStatus queryOrderStatusInfo(String orderId) {
-        return orderStatusMapper.selectByPrimaryKey(orderId);
+        return orderStatusMapper.selectById(orderId);
+//        return orderStatusMapper.selectByPrimaryKey(orderId);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -172,7 +175,8 @@ public class OrderServiceImpl implements OrderService {
         // 查询所有未付款订单，判断时间是否超时（1天），超时则关闭交易
         OrderStatus queryOrder = new OrderStatus();
         queryOrder.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
-        List<OrderStatus> list = orderStatusMapper.select(queryOrder);
+//        List<OrderStatus> list = orderStatusMapper.select(queryOrder);
+        List<OrderStatus> list = orderStatusMapper.selectList(new QueryWrapper<OrderStatus>().eq("order_status", OrderStatusEnum.WAIT_PAY.type));
         for (OrderStatus os : list) {
             // 获得订单创建时间
             Date createdTime = os.getCreatedTime();
@@ -191,6 +195,7 @@ public class OrderServiceImpl implements OrderService {
         close.setOrderId(orderId);
         close.setOrderStatus(OrderStatusEnum.CLOSE.type);
         close.setCloseTime(new Date());
-        orderStatusMapper.updateByPrimaryKeySelective(close);
+//        orderStatusMapper.updateByPrimaryKeySelective(close);
+        orderStatusMapper.update(close, new QueryWrapper<OrderStatus>().eq("order_id", orderId));
     }
 }

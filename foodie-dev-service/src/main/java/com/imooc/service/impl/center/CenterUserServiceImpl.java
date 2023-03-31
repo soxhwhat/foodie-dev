@@ -25,7 +25,8 @@ public class CenterUserServiceImpl implements CenterUserService {
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public Users queryUserInfo(String userId) {
-        Users user = usersMapper.selectByPrimaryKey(userId);
+//        Users user = usersMapper.selectByPrimaryKey(userId);
+        Users user = usersMapper.selectById(userId);
         user.setPassword(null);
         return user;
     }
@@ -39,8 +40,8 @@ public class CenterUserServiceImpl implements CenterUserService {
         updateUser.setId(userId);
         updateUser.setUpdatedTime(new Date());
 
-        usersMapper.updateByPrimaryKeySelective(updateUser);
-
+//        usersMapper.updateByPrimaryKeySelective(updateUser);
+        usersMapper.updateById(updateUser);
         return queryUserInfo(userId);
     }
 
@@ -52,8 +53,8 @@ public class CenterUserServiceImpl implements CenterUserService {
         updateUser.setFace(faceUrl);
         updateUser.setUpdatedTime(new Date());
 
-        usersMapper.updateByPrimaryKeySelective(updateUser);
-
+//        usersMapper.updateByPrimaryKeySelective(updateUser);
+        usersMapper.updateById(updateUser);
         return queryUserInfo(userId);
     }
 }
