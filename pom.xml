@@ -75,8 +75,15 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.41</version>
+			<version>5.1.48</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.datastax.spark</groupId>
+			<artifactId>spark-cassandra-connector_2.12</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+
 		<!-- mybatis -->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>

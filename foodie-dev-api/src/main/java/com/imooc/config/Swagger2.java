@@ -32,7 +32,7 @@ public class Swagger2 {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("天天吃货 电商平台接口api")        // 文档页标题
+                .title("soxhwhat-test-api")        // 文档页标题
                 .contact(new Contact("imooc",
                         "https://www.imooc.com",
                         "abc@imooc.com"))        // 联系人信息

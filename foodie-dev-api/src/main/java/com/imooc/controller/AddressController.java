@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+//@Api
 @Api(value = "地址相关", tags = {"地址相关的api接口"})
 @RequestMapping("address")
 @RestController
@@ -36,8 +37,8 @@ public class AddressController {
 
     @Autowired
     private AddressService addressService;
-
-    @ApiOperation(value = "根据用户id查询收货地址列表", notes = "根据用户id查询收货地址列表", httpMethod = "POST")
+//@ApiOperation用于生成接口文档的注解，value是接口的名称，notes是接口的描述，httpMethod是接口的请求方式
+    @ApiOperation(value = "根据用户id查询收货地址列表", notes = "testNote", httpMethod = "POST")
     @PostMapping("/list")
     public IMOOCJSONResult list(
             @RequestParam String userId) {

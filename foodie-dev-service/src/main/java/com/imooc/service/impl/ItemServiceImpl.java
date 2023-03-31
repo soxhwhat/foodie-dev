@@ -190,11 +190,29 @@ public class ItemServiceImpl implements ItemService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
+    @KVIndex
     public String queryItemMainImgById(String itemId) {
         ItemsImg itemsImg = new ItemsImg();
         itemsImg.setItemId(itemId);
         itemsImg.setIsMain(YesOrNo.YES.type);
 //        ItemsImg result = itemsImgMapper.selectOne(itemsImg);
+        /**
+         *         // 第一个参数为是否执行条件，为true则执行该条件
+         *         // 下面实现根据 name 和 age 动态查询
+         *         wrapper.eq(StringUtils.isNotEmpty(name), "name", name);
+         *         wrapper.eq(null != age, "age", age);
+         *
+         *         // 第一个参数为是否执行条件，为true则执行该条件
+         *         // 下面实现根据 name 和 age 动态查询
+         *         if(StringUtils.isNotEmpty(name)) {
+         *             map.put("name", name);
+         *         }
+         *         if(null != age) {
+         *             map.put("age", age);
+         *         }
+         *
+         *         List<UserBean> userBeanList = simpleMapper.selectByMap(map);
+         */
         ItemsImg result = itemsImgMapper.selectOne(new QueryWrapper<ItemsImg>().eq("item_id", itemId).eq("is_main", YesOrNo.YES.type));
         return result != null ? result.getUrl() : "";
     }
